@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owner Dashboard - Smart Water Supply</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Owner Dashboard</h1>
+      <p id="ownerWelcomeText">Private interface for your water plant orders</p>
+    </div>
+    <div class="actions">
+      <button id="refreshOwnerBtn" type="button" class="btn ghost">Refresh</button>
+      <button id="ownerLogoutBtn" type="button" class="btn primary">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel active">
+      <div class="grid three-col stats-grid" id="ownerStatsGrid"></div>
+
+      <article class="card">
+        <h2>Incoming Order Requests</h2>
+        <p class="muted">Only orders for your registered plant are shown here.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Slip No</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Phone</th>
+                <th>Place</th>
+                <th>Qty</th>
+                <th>Money</th>
+                <th>Payment</th>
+                <th>Txn ID</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="ownerOrdersBody"></tbody>
+          </table>
+        </div>
+        <p id="ownerDashboardStatus" class="status"></p>
+      </article>
+    </section>
+  </main>
+
+  <script src="owner.js"></script>
+</body>
+</html>

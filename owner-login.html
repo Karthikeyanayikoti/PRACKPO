@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Owner Login - Smart Water Supply</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section class="auth-screen">
+    <article class="auth-card">
+      <h2 id="ownerAuthTitle">Owner Sign In</h2>
+      <p class="muted">Private login for water plant owners.</p>
+
+      <div class="auth-tabs" role="tablist" aria-label="Owner auth mode">
+        <button id="ownerSignInTabBtn" class="mode-btn active" type="button" role="tab" aria-selected="true">Sign In</button>
+        <button id="ownerSignUpTabBtn" class="mode-btn" type="button" role="tab" aria-selected="false">Sign Up</button>
+      </div>
+
+      <form id="ownerAuthForm" class="booking-form auth-form">
+        <div id="ownerNameRow" class="form-row hidden">
+          <label for="ownerName">Full Name</label>
+          <input id="ownerName" type="text" placeholder="Enter owner full name" />
+        </div>
+
+        <div id="ownerSupplierRow" class="form-row hidden">
+          <label for="ownerSupplier">Water Plant</label>
+          <select id="ownerSupplier" required>
+            <option value="">Select your plant</option>
+            <option value="SUP-101">AquaPure Water Plant</option>
+            <option value="SUP-102">BlueDrop Supplies</option>
+            <option value="SUP-103">FreshSpring Water</option>
+            <option value="SUP-104">CityTank Delivery</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="ownerEmail">Email</label>
+          <input id="ownerEmail" type="email" placeholder="Enter owner email" required />
+        </div>
+
+        <div class="form-row">
+          <label for="ownerPassword">Password</label>
+          <input id="ownerPassword" type="password" placeholder="Enter password" required />
+        </div>
+
+        <button id="ownerAuthSubmitBtn" type="submit" class="btn primary">Sign In</button>
+      </form>
+
+      <p id="ownerAuthStatus" class="status"></p>
+      <p class="muted">Customer? <a href="/">Go to Customer Login</a></p>
+    </article>
+  </section>
+
+  <script src="owner.js"></script>
+</body>
+</html>
