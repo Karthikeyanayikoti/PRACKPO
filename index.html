@@ -9,12 +9,15 @@
 <body>
   <section id="authSection" class="auth-screen">
     <article class="auth-card">
-      <h2 id="authTitle">User Sign In</h2>
-      <p class="muted">Login to continue water booking.</p>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💧</div>
+        <h2 id="authTitle">Smart Water Supply</h2>
+      </div>
+      <p class="muted" style="text-align: center; font-size: 0.95rem;">Login to continue water booking.</p>
 
       <div class="auth-tabs" role="tablist" aria-label="Account type">
-        <button id="customerAuthBtn" class="mode-btn active" type="button" role="tab" aria-selected="true">Customer Login</button>
-        <button id="ownerAuthBtn" class="mode-btn" type="button" role="tab" aria-selected="false">Owner Login</button>
+        <button id="customerAuthBtn" class="mode-btn active" type="button" role="tab" aria-selected="true">👤 Customer</button>
+        <button id="ownerAuthBtn" class="mode-btn" type="button" role="tab" aria-selected="false">🏭 Owner</button>
       </div>
 
       <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
@@ -24,28 +27,28 @@
 
       <form id="authForm" class="booking-form auth-form">
         <div id="nameRow" class="form-row hidden">
-          <label for="authName">Full Name</label>
+          <label for="authName">📝 Full Name</label>
           <input id="authName" type="text" placeholder="Enter your full name" />
         </div>
         <div id="ownerSupplierRow" class="form-row hidden">
-          <label for="ownerSupplierAuth">Water Plant</label>
+          <label for="ownerSupplierAuth">🏢 Water Plant</label>
           <select id="ownerSupplierAuth">
             <option value="">Select your plant</option>
           </select>
         </div>
         <div class="form-row">
-          <label for="authEmail">Email</label>
+          <label for="authEmail">📧 Email</label>
           <input id="authEmail" type="email" placeholder="Enter email" required />
         </div>
         <div class="form-row">
-          <label for="authPassword">Password</label>
+          <label for="authPassword">🔐 Password</label>
           <input id="authPassword" type="password" placeholder="Enter password" required />
         </div>
-        <button id="authSubmitBtn" type="submit" class="btn primary">Sign In</button>
+        <button id="authSubmitBtn" type="submit" class="btn primary" style="font-size: 1rem; padding: 0.85rem;">Sign In</button>
       </form>
 
       <p id="authStatus" class="status"></p>
-      <p class="muted">Water plant owner? <a href="/owner-login.html">Go to Owner Login</a></p>
+      <p class="muted" style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">Water plant owner? <a href="/owner-login.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">Go to Owner Login →</a></p>
     </article>
   </section>
 

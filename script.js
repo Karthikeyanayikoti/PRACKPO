@@ -39,6 +39,27 @@ const suppliers = [
     status: "closed",
     slots: []
   }
+  ,
+  {
+    id: "SUP-105",
+    name: "RiverFlow Bottlers",
+    distanceKm: 2.7,
+    rating: 4.3,
+    pricePerCan: 33,
+    deliveryTime: "35-50 mins",
+    status: "available",
+    slots: ["07:00-09:00", "11:00-13:00", "15:00-17:00"]
+  },
+  {
+    id: "SUP-106",
+    name: "PureWell Services",
+    distanceKm: 6.8,
+    rating: 4.1,
+    pricePerCan: 29,
+    deliveryTime: "80-100 mins",
+    status: "available",
+    slots: ["08:00-10:00", "13:00-15:00", "18:00-20:00"]
+  }
 ];
 
 const bookings = [
