@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Water Supply Booking</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section id="authSection" class="auth-screen">
+    <article class="auth-card">
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💧</div>
+        <h2 id="authTitle">Smart Water Supply</h2>
+      </div>
+      <p class="muted" style="text-align: center; font-size: 0.95rem;">Login to continue water booking.</p>
+
+      <div class="auth-tabs" role="tablist" aria-label="Account type">
+        <button id="customerAuthBtn" class="mode-btn active" type="button" role="tab" aria-selected="true">👤 Customer</button>
+        <button id="ownerAuthBtn" class="mode-btn" type="button" role="tab" aria-selected="false">🏭 Owner</button>
+      </div>
+
+      <div class="auth-tabs" role="tablist" aria-label="Authentication mode">
+        <button id="signInTabBtn" class="mode-btn active" role="tab" aria-selected="true">Sign In</button>
+        <button id="signUpTabBtn" class="mode-btn" role="tab" aria-selected="false">Sign Up</button>
+      </div>
+
+      <form id="authForm" class="booking-form auth-form">
+        <div id="nameRow" class="form-row hidden">
+          <label for="authName">📝 Full Name</label>
+          <input id="authName" type="text" placeholder="Enter your full name" />
+        </div>
+        <div id="ownerSupplierRow" class="form-row hidden">
+          <label for="ownerSupplierAuth">🏢 Water Plant</label>
+          <select id="ownerSupplierAuth">
+            <option value="">Select your plant</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="authEmail">📧 Email</label>
+          <input id="authEmail" type="email" placeholder="Enter email" required />
+        </div>
+        <div class="form-row">
+          <label for="authPassword">🔐 Password</label>
+          <input id="authPassword" type="password" placeholder="Enter password" required />
+        </div>
+        <button id="authSubmitBtn" type="submit" class="btn primary" style="font-size: 1rem; padding: 0.85rem;">Sign In</button>
+      </form>
+
+      <p id="authStatus" class="status"></p>
+      <p class="muted" style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">Water plant owner? <a href="/owner-login.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">Go to Owner Login →</a></p>
+    </article>
+  </section>
+
+  <div id="appShell" class="hidden">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Smart Water Supply Booking</h1>
+        <p><span id="welcomeName">Welcome</span> • Book water suppliers near you for events and daily needs</p>
+      </div>
+      <div class="mode-switch" role="tablist" aria-label="Application mode">
+        <button id="customerModeBtn" class="mode-btn active" role="tab" aria-selected="true">Customer</button>
+        <button id="ownerModeBtn" class="mode-btn" role="tab" aria-selected="false">Water Plant Owner</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="customerSection" class="panel active" aria-labelledby="customerModeBtn">
+        <div class="grid two-col">
+          <article class="card">
+            <h2>1. Find Nearby Water Suppliers</h2>
+            <p class="muted">Enter your area or use current location to view available suppliers.</p>
+            <div class="form-row">
+              <label for="locationInput">Location / Area</label>
+              <input id="locationInput" type="text" placeholder="Example: Vijayawada, MG Road" />
+            </div>
+            <div class="actions">
+              <button id="searchBtn" class="btn primary">Search Suppliers</button>
+              <button id="detectBtn" class="btn ghost">Use My Location</button>
+            </div>
+            <p id="locationStatus" class="status"></p>
+          </article>
+
+          <article class="card">
+            <h2>2. Compare Supplier Services</h2>
+            <p class="muted">Select a supplier card to auto-fill the booking form.</p>
+            <div id="comparisonBox" class="comparison-box">
+              <p class="muted">No supplier selected yet.</p>
+            </div>
+          </article>
+        </div>
+
+        <article class="card">
+          <h2>Nearby Suppliers</h2>
+          <div id="supplierList" class="supplier-grid"></div>
+        </article>
+
+        <article class="card">
+          <h2>3. Book Water Delivery</h2>
+          <form id="bookingForm" class="booking-form">
+            <div class="grid two-col">
+              <div class="form-row">
+                <label for="selectedSupplier">Selected Supplier</label>
+                <input id="selectedSupplier" type="text" readonly placeholder="Select from nearby suppliers" />
+              </div>
+              <div class="form-row">
+                <label for="quantity">Quantity (20L Cans)</label>
+                <input id="quantity" type="number" min="1" value="1" required />
+              </div>
+            </div>
+
+            <div class="grid three-col">
+              <div class="form-row">
+                <label for="deliveryDate">Delivery Date</label>
+                <input id="deliveryDate" type="date" required />
+              </div>
+              <div class="form-row">
+                <label for="timeSlot">Time Slot</label>
+                <select id="timeSlot" required>
+                  <option value="">Select slot</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label for="phone">Mobile Number</label>
+                <input id="phone" type="tel" placeholder="10-digit number" pattern="[0-9]{10}" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label for="address">Delivery Address</label>
+              <textarea id="address" rows="3" placeholder="Enter full delivery address" required></textarea>
+            </div>
+
+            <div class="checkout-bar">
+              <p>Total Amount: <strong id="totalAmount">₹0</strong></p>
+              <button id="proceedPaymentBtn" type="button" class="btn primary">Proceed to Payment</button>
+            </div>
+          </form>
+          <p id="bookingStatus" class="status"></p>
+        </article>
+
+        <article id="orderSlipCard" class="card hidden">
+          <h2>Order Slip</h2>
+          <p class="muted">Your latest confirmed order receipt.</p>
+          <div id="orderSlipContent" class="comparison-box"></div>
+        </article>
+      </section>
+
+      <section id="ownerSection" class="panel" aria-labelledby="ownerModeBtn">
+        <div class="grid three-col stats-grid" id="ownerStats"></div>
+
+        <article class="card">
+          <h2>Update Supplier Availability</h2>
+          <form id="availabilityForm" class="grid three-col compact-form">
+            <div class="form-row">
+              <label for="ownerSupplier">Supplier</label>
+              <select id="ownerSupplier"></select>
+            </div>
+            <div class="form-row">
+              <label for="ownerStatus">Status</label>
+              <select id="ownerStatus">
+                <option value="available">Available</option>
+                <option value="busy">Busy</option>
+                <option value="closed">Closed</option>
+              </select>
+            </div>
+            <div class="form-row actions bottom-align">
+              <button type="submit" class="btn primary">Update</button>
+            </div>
+          </form>
+          <p id="ownerStatusMsg" class="status"></p>
+        </article>
+
+        <article class="card">
+          <h2>Customer Bookings</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Booking ID</th>
+                  <th>Customer</th>
+                  <th>Supplier</th>
+                  <th>Quantity</th>
+                  <th>Date</th>
+                  <th>Slot</th>
+                  <th>Phone</th>
+                  <th>Place</th>
+                  <th>Amount</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="bookingTableBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <section id="paymentModal" class="payment-modal hidden" aria-hidden="true">
+    <article class="payment-dialog">
+      <h2>Payment Interface</h2>
+      <p id="paymentSummary" class="muted">Review your booking and complete payment.</p>
+
+      <form id="paymentForm" class="booking-form">
+        <fieldset class="payment-fieldset">
+          <legend>Payment Method</legend>
+          <label><input type="radio" name="paymentMethod" value="UPI" checked /> UPI</label>
+          <label><input type="radio" name="paymentMethod" value="Card" /> Debit/Credit Card</label>
+          <label><input type="radio" name="paymentMethod" value="NetBanking" /> Net Banking</label>
+        </fieldset>
+
+        <div id="bankDetailsBlock" class="bank-details hidden">
+          <h3>Bank Details</h3>
+          <p class="muted">Required for Net Banking payments.</p>
+          <div class="grid two-col">
+            <div class="form-row">
+              <label for="accountHolderName">Account Holder Name</label>
+              <input id="accountHolderName" type="text" placeholder="Enter account holder name" />
+            </div>
+            <div class="form-row">
+              <label for="bankName">Bank Name</label>
+              <input id="bankName" type="text" placeholder="Enter bank name" />
+            </div>
+          </div>
+          <div class="grid two-col">
+            <div class="form-row">
+              <label for="accountNumber">Account Number</label>
+              <input id="accountNumber" type="text" inputmode="numeric" placeholder="Enter account number" />
+            </div>
+            <div class="form-row">
+              <label for="confirmAccountNumber">Confirm Account Number</label>
+              <input id="confirmAccountNumber" type="text" inputmode="numeric" placeholder="Re-enter account number" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="ifscCode">IFSC Code</label>
+            <input id="ifscCode" type="text" placeholder="Example: HDFC0001234" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="cancelPaymentBtn" type="button" class="btn ghost">Cancel</button>
+          <button id="payNowBtn" type="submit" class="btn primary">Pay Now</button>
+        </div>
+      </form>
+      <p id="paymentStatus" class="status"></p>
+    </article>
+  </section>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
