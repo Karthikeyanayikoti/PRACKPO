@@ -503,18 +503,18 @@ app.get("/api/owners/dashboard", async (req, res) => {
   }
 });
 
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.get(["/owner-login", "/owner-login/", "/owner-login.html"], (req, res) => {
-  res.sendFile(path.join(__dirname, "owner-login.html"));
+  res.sendFile(path.join(__dirname, "../frontend/owner-login.html"));
 });
 
 app.get(["/owner-dashboard", "/owner-dashboard/", "/owner-dashboard.html"], (req, res) => {
-  res.sendFile(path.join(__dirname, "owner-dashboard.html"));
+  res.sendFile(path.join(__dirname, "../frontend/owner-dashboard.html"));
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 async function startServer() {

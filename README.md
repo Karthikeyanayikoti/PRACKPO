@@ -1,5 +1,10 @@
 # smart-water-supply-booking
 
+## Project Layout
+
+- `frontend/` contains the browser UI: `index.html`, `owner-login.html`, `owner-dashboard.html`, `script.js`, `owner.js`, and `styles.css`.
+- `backend/` contains the Node/Express server and data models: `server.js`, `fix-indexes.js`, and `models/`.
+
 Quick notes to deploy this Node.js app to Railway (Docker) or similar platforms.
 
 Prerequisites

@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: smart-water-supply-booking
+    env: node
+    region: singapore
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: PLATFORM_FEE_PERCENT
+        value: "10"
+      - key: RAZORPAY_ROUTE_ENABLED
+        value: "true"
+      - key: PLATFORM_PAYOUT_MODE
+        value: admin_collect_and_settle
