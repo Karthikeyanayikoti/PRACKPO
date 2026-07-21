@@ -518,20 +518,19 @@ app.get("*", (req, res) => {
 });
 
 async function startServer() {
-  try {
+  app.listen(PORT, async () => {
+    console.log(`Server running on port ${PORT}`);
     if (!MONGO_URI) {
-      throw new Error("MONGO_URI is missing. Add it in .env file.");
+      console.warn("⚠️ MONGO_URI is missing. Please set MONGO_URI in Environment Variables.");
+    } else {
+      try {
+        await mongoose.connect(MONGO_URI);
+        console.log("✅ MongoDB connected successfully.");
+      } catch (error) {
+        console.error("❌ MongoDB connection error:", error.message);
+      }
     }
-
-    await mongoose.connect(MONGO_URI);
-    console.log("MongoDB connected successfully.");
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error("Startup error:", error.message);
-    process.exit(1);
-  }
+  });
 }
 
 startServer();
