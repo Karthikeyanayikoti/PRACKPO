@@ -34,8 +34,29 @@ app.use((error, req, res, next) => {
   return next(error);
 });
 
+app.get("/api/health", (req, res) => {
+  const states = ["disconnected", "connected", "connecting", "disconnecting"];
+  res.json({
+    status: "ok",
+    dbConnected: mongoose.connection.readyState === 1,
+    dbState: states[mongoose.connection.readyState] || "unknown"
+  });
+});
+
+function checkDbConnected(res) {
+  if (mongoose.connection.readyState !== 1) {
+    res.status(503).json({
+      message: "Database connection pending. Please ensure MONGO_URI environment variable is configured in Render."
+    });
+    return false;
+  }
+  return true;
+}
+
 app.post("/api/auth/signup", async (req, res) => {
   try {
+    if (!checkDbConnected(res)) return;
+
     const { name, email, password, role = "customer", supplierId = null } = req.body;
     const normalizedRole = String(role).trim().toLowerCase();
     const normalizedSupplierId = supplierId ? String(supplierId).trim() : null;
@@ -79,12 +100,15 @@ app.post("/api/auth/signup", async (req, res) => {
       }
     });
   } catch (error) {
-    return res.status(500).json({ message: "Server error during sign up." });
+    console.error("Signup error:", error);
+    return res.status(500).json({ message: error.message || "Server error during sign up." });
   }
 });
 
 app.post("/api/auth/signin", async (req, res) => {
   try {
+    if (!checkDbConnected(res)) return;
+
     const { email, password, role = "customer" } = req.body;
     const normalizedRole = String(role).trim().toLowerCase();
 
@@ -126,7 +150,8 @@ app.post("/api/auth/signin", async (req, res) => {
       }
     });
   } catch (error) {
-    return res.status(500).json({ message: "Server error during sign in." });
+    console.error("Signin error:", error);
+    return res.status(500).json({ message: error.message || "Server error during sign in." });
   }
 });
 
