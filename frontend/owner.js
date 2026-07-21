@@ -1,4 +1,4 @@
-const API_BASE = window.location.origin.includes("localhost:5000") ? "" : "http://localhost:5000";
+const API_BASE = "";
 
 function currency(value) {
   return new Intl.NumberFormat("en-IN", {

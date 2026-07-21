@@ -153,7 +153,7 @@ let currentUserRole = "customer";
 let currentOwnerSupplierId = null;
 let userPrivateLocation = null;
 let pendingBookingDraft = null;
-const API_BASE = window.location.origin.includes("localhost:5000") ? "" : "http://localhost:5000";
+const API_BASE = "";
 
 function formatAreaFromReverseGeocode(result) {
   const area = result.locality || result.city || result.principalSubdivision || "";
