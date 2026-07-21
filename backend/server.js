@@ -34,20 +34,26 @@ app.use((error, req, res, next) => {
   return next(error);
 });
 
+let lastMongoError = null;
+
 app.get("/api/health", (req, res) => {
   const states = ["disconnected", "connected", "connecting", "disconnecting"];
   res.json({
     status: "ok",
+    mongoUriConfigured: Boolean(process.env.MONGO_URI),
     dbConnected: mongoose.connection.readyState === 1,
-    dbState: states[mongoose.connection.readyState] || "unknown"
+    dbState: states[mongoose.connection.readyState] || "unknown",
+    lastDbError: lastMongoError
   });
 });
 
 function checkDbConnected(res) {
   if (mongoose.connection.readyState !== 1) {
-    res.status(503).json({
-      message: "Database connection pending. Please ensure MONGO_URI environment variable is configured in Render."
-    });
+    const hasUri = Boolean(process.env.MONGO_URI);
+    const msg = hasUri
+      ? `Database connecting or authentication failed (${lastMongoError || "re-trying"}). Please verify your MongoDB password and Network Access (0.0.0.0/0) in Atlas.`
+      : "Database connection pending. Please ensure MONGO_URI environment variable is configured in Render.";
+    res.status(503).json({ message: msg });
     return false;
   }
   return true;
@@ -545,13 +551,15 @@ app.get("*", (req, res) => {
 async function startServer() {
   app.listen(PORT, async () => {
     console.log(`Server running on port ${PORT}`);
-    if (!MONGO_URI) {
+    if (!process.env.MONGO_URI) {
       console.warn("⚠️ MONGO_URI is missing. Please set MONGO_URI in Environment Variables.");
     } else {
       try {
-        await mongoose.connect(MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URI);
         console.log("✅ MongoDB connected successfully.");
+        lastMongoError = null;
       } catch (error) {
+        lastMongoError = error.message;
         console.error("❌ MongoDB connection error:", error.message);
       }
     }
